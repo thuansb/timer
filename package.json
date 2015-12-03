@@ -1,0 +1,29 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "timer js app using react for demostration",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuansb/timer.git"
+  },
+  "keywords": [
+    "timer",
+    "react"
+  ],
+  "author": "thuansb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thuansb/timer/issues"
+  },
+  "homepage": "https://github.com/thuansb/timer#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
+}
