@@ -11,6 +11,7 @@ var FreedomTimerInput = React.createClass({
 	},
 	onClick(){
 		var standardTime = this._understandLang(this.refs.input.value);
+		console.log(standardTime);
 		var timeInSeconds = this._toSecond(standardTime);
 		this.props.onSetTime(timeInSeconds);
 	},
@@ -20,7 +21,7 @@ var FreedomTimerInput = React.createClass({
 		//Split by space
 		if(input){
 			var arrInput = input.split(' ');
-			for (var i = arrInput.length - 1; i >= 0; i--) {
+			for (var i = 0; i < arrInput.length; i++) {
 				//Find matched word in lang
 				var timeType = this._findInLang(arrInput[i]);
 				if (timeType != -1 && i > 0 && !isNaN(arrInput[i-1])) {	
@@ -29,7 +30,7 @@ var FreedomTimerInput = React.createClass({
 							output.h = arrInput[i-1];
 							break;
 						case 'm':
-							output.m = arrInput[i-1];
+							output.m = parseInt(arrInput[i-1]);
 							break;
 						case 's':
 							output.s = arrInput[i-1];
@@ -37,7 +38,7 @@ var FreedomTimerInput = React.createClass({
 						default:
 					}
 				}
-			};			
+			}			
 			return this._standardTheTime(output);
 		}
 	},
@@ -57,16 +58,16 @@ var FreedomTimerInput = React.createClass({
 	},
 	_standardTheTime(input){		
 		var s = input.s % 60;
-		var m = input.m + (input.s / 60);
-		var h = input.h + (m / 60);
-		var m = m % 60;
+		var m = input.m + parseInt(input.s / 60);		
+		var h = input.h + parseInt(m / 60);
+		console.log(input.h + ' ' + h + ' ' + parseInt(m / 60));
+		m = m % 60;
 
 		if(h > 23){ //Over one day -> reset to default
 			input = {h: 0,m: 0,s: 0};
 		} else {
 			input = {h: h, m: m, s: s};
 		}
-
 		return input;
 	},
 	_toSecond(input){
