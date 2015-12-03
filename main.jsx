@@ -1,7 +1,8 @@
 var React =  require('react');
 var ReactDOM = require('react-dom');
-
+var Timer = require('./countdown.jsx');
 ReactDOM.render(
-	<h1>Hello world</h1>,
+	<Timer initVal={30} />,
 	document.getElementById('timer')
 );
+
