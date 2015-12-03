@@ -1,5 +1,6 @@
 var React = require('react');
 var Footer = require('./footer.jsx');
+var FreedomTimerInput = require('./freedom-timer-input.jsx');
 
 var Timer = React.createClass({
 	getInitialState() {
@@ -31,10 +32,18 @@ var Timer = React.createClass({
 	_onReset() {
 		this.setState({countdownVal: this.props.initVal});
 	},
+	_onSetTime(timeInSeconds){
+		if(this.interval){
+			clearInterval(this.interval);
+		}
+		this.setState({countdownVal: timeInSeconds});	
+		this._onStart(false);
+	},
 	render() {
 		return (
 			<div>
 				<h2>TIMER</h2>
+				<FreedomTimerInput onSetTime={this._onSetTime} placeholder='e.g. 10 mins' btName='SET' />
 				<span style={{fontSize: '40px'}}>
 					{this.state.countdownVal + ' seconds'}
 				</span>								

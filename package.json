@@ -4,7 +4,8 @@
   "description": "timer js app using react for demostration",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,12 @@
     "babelify": "^7.2.0",
     "react": "^0.14.3",
     "react-dom": "^0.14.3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-util": "^3.0.7",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.6.1"
   }
 }
