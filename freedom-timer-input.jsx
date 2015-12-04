@@ -9,7 +9,7 @@ var FreedomTimerInput = React.createClass({
 	getInitialState() {
 		return {};
 	},
-	onClick(){
+	_onClick(){
 		var standardTime = this._understandLang(this.refs.input.value);
 		var timeInSeconds = this._toSecond(standardTime);
 		this.props.onSetTime(timeInSeconds);
@@ -26,13 +26,13 @@ var FreedomTimerInput = React.createClass({
 				if (timeType != -1 && i > 0 && !isNaN(arrInput[i-1])) {	
 					switch(timeType){
 						case 'h': 														
-							output.h = arrInput[i-1];
+							output.h = parseInt(arrInput[i-1]);
 							break;
 						case 'm':
-							output.m = arrInput[i-1];
+							output.m = parseInt(arrInput[i-1]);
 							break;
 						case 's':
-							output.s = arrInput[i-1];
+							output.s = parseInt(arrInput[i-1]);
 							break;
 						default:
 					}
@@ -57,8 +57,8 @@ var FreedomTimerInput = React.createClass({
 	},
 	_standardTheTime(input){		
 		var s = input.s % 60;
-		var m = input.m + (input.s / 60);
-		var h = input.h + (m / 60);
+		var m = input.m + parseInt(input.s / 60);
+		var h = input.h + parseInt(m / 60);
 		var m = m % 60;
 
 		if(h > 23){ //Over one day -> reset to default
@@ -72,11 +72,18 @@ var FreedomTimerInput = React.createClass({
 	_toSecond(input){
 		return input.h*60*60 + input.m*60 + input.s;
 	},
+	_onKeyPress(e){
+		if(e.keyCode === 13){
+           this._onClick();
+        }
+
+        return false;
+	},
 	render() {
 		return (
 			<div>
 				<input ref='input' type='text' placeholder={this.props.placeholder}/>
-				<input type='button' value={this.props.btName} onClick={this.onClick}></input>
+				<input type='button' value={this.props.btName} onClick={this._onClick} onkeypress={this._onKeyPress}></input>
 			</div>
 		);
 	}

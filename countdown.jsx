@@ -14,7 +14,16 @@ var Timer = React.createClass({
 			if(this.interval){
 				clearInterval(this.interval);
 			}
-			alert('Time over!!!');
+			//alert('Time over!!!');
+			var audio = new Audio('beep.mp3');
+			var repeatTimes = 0;
+			audio.addEventListener('ended', function() {		        
+		        if(repeatTimes <= 3){
+			        this.currentTime = 0;
+			        this.play();	
+		        }		        
+		    }.bind(null, repeatTimes), false);
+			audio.play();
 		}
 	},
 	componentDidMount() {
@@ -39,14 +48,39 @@ var Timer = React.createClass({
 		this.setState({countdownVal: timeInSeconds});	
 		this._onStart(false);
 	},
+	_secondToHMS(input){		
+		var s = input % 60;
+		var m = parseInt(input / 60);
+		var h = parseInt(m / 60);
+		m = m % 60;
+
+		if(h > 23){ //Over one day -> reset to default
+			input = {h: 0, m: 0, s: 0};
+		} else {
+			input = {h: h, m: m, s: s};
+		}
+
+		return input;
+	},
 	render() {
+		var timeInHMS = this._secondToHMS(this.state.countdownVal);
+		var bigFont = {fontSize: '30px'};
 		return (
 			<div>
 				<h2>TIMER</h2>
 				<FreedomTimerInput onSetTime={this._onSetTime} placeholder='e.g. 10 mins' btName='SET' />
-				<span style={{fontSize: '40px'}}>
-					{this.state.countdownVal + ' seconds'}
-				</span>								
+				<span style={bigFont}>
+					{timeInHMS.h}
+				</span>
+				<span>h </span>
+				<span style={bigFont}>
+					{timeInHMS.m}
+				</span>
+				<span>m </span>
+				<span style={bigFont}>
+					{timeInHMS.s}
+				</span>			
+				<span>s </span>					
 				<Footer onStart={this._onStart} onReset={this._onReset} />				
 			</div>
 		);
